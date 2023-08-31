@@ -14,6 +14,7 @@ class HalamanUtamaScreen extends StatefulWidget {
 }
 
 class _HalamanUtamaScreenState extends State<HalamanUtamaScreen> {
+  bool editForm = false;
   bool result = false;
 
   // menyimpan hasil inputan
@@ -43,7 +44,7 @@ class _HalamanUtamaScreenState extends State<HalamanUtamaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Center(child: Text(widget.title!)),
+          title: Text("${editForm ? "Perbarui" : "Tambah"} data"),
           backgroundColor: Colors.teal,
           actions: const [],
         ),
@@ -62,7 +63,8 @@ class _HalamanUtamaScreenState extends State<HalamanUtamaScreen> {
               child: TextFormField(
                 controller: description,
                 decoration: const InputDecoration(
-                    labelText: 'Deskripsi Barang :', border: OutlineInputBorder()),
+                    labelText: 'Deskripsi Barang :',
+                    border: OutlineInputBorder()),
               ),
             ),
             Padding(
@@ -82,8 +84,12 @@ class _HalamanUtamaScreenState extends State<HalamanUtamaScreen> {
               ),
             ),
             TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, "/products/add");
+                onPressed: () async {
+                  result = await managementService.createStore(
+                      title.text, description.text, price.text, stock.text);
+                  if (result) {
+                    Navigator.pop(context);
+                  }
                 },
                 child: const Text('Simpan'))
           ],

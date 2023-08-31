@@ -1,4 +1,5 @@
 // ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:lat_project_isa/modules/management_product/management_store_model.dart';
@@ -28,7 +29,13 @@ class _ManagementScreenState extends State<ManagementScreen> {
     return Scaffold(
         appBar: AppBar(
           title: const Text("Dashboard"),
-          actions: const [],
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, "/products/posts");
+                },
+                icon: const Icon(Icons.add))
+          ],
         ),
         body: Column(
           children: [
